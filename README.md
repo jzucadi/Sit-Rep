@@ -1,4 +1,4 @@
-# JimiStats
+# MiStats
 
 [![CI](https://github.com/jzucadi/SysStats/actions/workflows/objective-c-xcode.yml/badge.svg)](https://github.com/jzucadi/SysStats/actions/workflows/objective-c-xcode.yml)
 [![macOS](https://img.shields.io/badge/macOS-13.0+-blue.svg)](https://www.apple.com/macos/)
