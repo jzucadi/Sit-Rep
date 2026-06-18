@@ -49,10 +49,9 @@ final class SystemMetricsTests: XCTestCase {
         let metrics = SystemMetrics(cpuUsage: 50, gpuUsage: 30, ramUsage: 60, temperature: 55.0)
         let prefs = MockPreferences(showCPU: true, showGPU: true, showRAM: true, showTemperature: true)
 
-        let result = metrics.statusBarText(prefs: prefs as! PreferencesManager)
+        let result = metrics.statusBarText(prefs: prefs)
 
-        // Note: This test uses the actual PreferencesManager singleton
-        // In a real test, we'd inject the preferences
+        XCTAssertEqual(result, "C:50% G:30% R:60% 55°")
     }
 
     func testStatusBarTextCPUOnly() {

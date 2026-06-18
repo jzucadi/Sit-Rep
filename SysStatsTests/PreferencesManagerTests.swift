@@ -8,12 +8,12 @@ final class PreferencesManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Use a separate suite for testing to avoid polluting actual preferences
-        testDefaults = UserDefaults(suiteName: "com.example.SysStats.tests")
-        testDefaults?.removePersistentDomain(forName: "com.example.SysStats.tests")
+        testDefaults = UserDefaults(suiteName: "com.jameszaccardo.SysStats.tests")
+        testDefaults?.removePersistentDomain(forName: "com.jameszaccardo.SysStats.tests")
     }
 
     override func tearDown() {
-        testDefaults?.removePersistentDomain(forName: "com.example.SysStats.tests")
+        testDefaults?.removePersistentDomain(forName: "com.jameszaccardo.SysStats.tests")
         testDefaults = nil
         super.tearDown()
     }

@@ -16,7 +16,7 @@ struct SystemMetrics {
         }
     }
 
-    func statusBarText(prefs: PreferencesManager) -> String {
+    func statusBarText(prefs: PreferencesProtocol) -> String {
         var components: [String] = []
 
         if prefs.showCPU {

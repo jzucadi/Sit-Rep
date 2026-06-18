@@ -80,8 +80,7 @@ Access preferences via the gear icon in the popover:
 1. Download the latest release DMG from the [Releases](https://github.com/jzucadi/SysStats/releases) page
 2. Open the DMG file
 3. Drag `SysStats.app` to your Applications folder
-4. Launch SysStats from Applications
-5. Grant necessary permissions when prompted
+4. Launch SysStats from Applications — it appears in the menu bar right away
 
 ### Option 2: Build from Source
 
@@ -137,9 +136,7 @@ The built app will be in `build/Build/Products/Release/` and the DMG in `dist/`.
 ### First Launch
 
 1. Launch SysStats from Applications or the menu bar
-2. Grant necessary permissions:
-   - **Accessibility** (for full functionality)
-   - **Screen Recording** (if prompted, for temperature monitoring)
+2. The stats appear immediately — no permissions, helper install, or admin password required
 
 ### Menu Bar
 
@@ -168,9 +165,8 @@ SysStats is built with modern Swift and SwiftUI, using the following architectur
 | `AppDelegate` | Status bar setup and Combine observation pipeline |
 | `StatsManager` | Async metrics fetching with configurable update intervals |
 | `SystemStats` | Low-level IOKit-based CPU, GPU, RAM, and temperature reading |
+| `HIDTemperatureReader` | Reads on-die thermal sensors via IOHIDEventSystem — no privileges required |
 | `PreferencesManager` | UserDefaults-backed settings storage with @Published properties |
-| `HelperManager` | XPC communication manager for privileged operations |
-| `SysStatsHelper` | Privileged XPC helper for secure temperature sensor access on Apple Silicon |
 | `ContentView` | SwiftUI popover interface with real-time updates |
 
 ### Key Technologies
@@ -178,17 +174,23 @@ SysStats is built with modern Swift and SwiftUI, using the following architectur
 - **SwiftUI** - Modern declarative UI framework
 - **Combine** - Reactive programming for state management
 - **IOKit** - Low-level system information access
-- **SMC (System Management Controller)** - Temperature and thermal sensor data
-- **XPC Services** - Secure inter-process communication for privileged operations
-- **SMAppService** - Privileged helper installation for secure temperature access
+- **IOHIDEventSystem** - On-die thermal sensor data on Apple Silicon
+- **SMC (System Management Controller)** - Temperature fallback on Intel Macs
+- **SMAppService** - Launch-at-login registration
 
 ### Temperature Monitoring
 
-Temperature reading on Apple Silicon requires privileged access to SMC (System Management Controller). SysStats uses a privileged helper tool (`SysStatsHelper`) that:
-- Runs as a separate XPC service with elevated privileges
-- Communicates securely via XPC protocol
-- Only provides temperature data (principle of least privilege)
-- Must be properly signed with a Developer ID for production use
+Temperature is read entirely in-process — **no privileged helper, root access, or
+special entitlement required**:
+
+- **Apple Silicon:** the `IOHIDEventSystem` API enumerates the SoC's thermal
+  sensors (CPU/SoC die) and averages the relevant ones.
+- **Intel:** falls back to reading SMC temperature keys directly.
+
+This uses Apple's private `IOHIDEventSystemClient` API, which is permitted for
+Developer ID / direct distribution (the Mac App Store is the only channel that
+forbids private API). Because the app is not sandboxed, these sensors are
+readable without any user permission prompt.
 
 ## Distribution
 
@@ -198,11 +200,12 @@ For public distribution, your app must be signed and notarized by Apple:
 
 1. **Sign the app with Developer ID:**
    ```bash
-   codesign --deep --force --verify --verbose \
+   codesign --force --verify --verbose \
      --sign "Developer ID Application: Your Name (TEAM_ID)" \
      --options runtime \
      dist/SysStats.app
    ```
+   The app is a single bundle with no embedded helper, so no `--deep` is needed.
 
 2. **Create a signed DMG:**
    ```bash
@@ -227,21 +230,20 @@ For public distribution, your app must be signed and notarized by Apple:
 
 ### Hardened Runtime
 
-The app is configured with Hardened Runtime for enhanced security. Required entitlements are defined in `SysStats.entitlements`.
+The app is configured with Hardened Runtime for enhanced security. The only entitlement it declares (`SysStats.entitlements`) is `com.apple.security.app-sandbox = false`, which is required for direct IOKit/HID/SMC sensor access. No additional hardened-runtime exceptions are needed.
 
-**Important:** The privileged helper (`SysStatsHelper`) requires proper signing with a Developer ID certificate for SMAppService to work on end-user machines. Development builds may have limited temperature monitoring functionality.
+**Note:** Temperature works in development builds too — there is no privileged helper to install or sign. A Developer ID and notarization are only needed so that *other* users can run the app without Gatekeeper warnings.
 
 ## Troubleshooting
 
 ### Temperature shows "—°" or is not updating
 
-**Cause:** The privileged helper is not properly installed or signed.
+**Cause:** No readable thermal sensors were found (rare), or you're on an Intel Mac where SMC keys differ by model.
 
 **Solution:**
-- For development builds, temperature monitoring may not work without proper signing
-- For release builds, ensure the helper is signed with a valid Developer ID
-- Try restarting the app
-- Check Console.app for XPC communication errors
+- Confirm the app is **not** sandboxed (the shipped `SysStats.entitlements` sets `app-sandbox = false`); sandboxing blocks IOKit/HID sensor access
+- Restart the app
+- Check Console.app (subsystem `com.jameszaccardo.SysStats`, category `temperature`) for read errors
 
 ### App doesn't show in menu bar
 
@@ -250,7 +252,7 @@ The app is configured with Hardened Runtime for enhanced security. Required enti
 **Solution:**
 - Check Activity Monitor for the SysStats process
 - Look for crash logs in Console.app
-- Try deleting preferences: `defaults delete com.example.SysStats`
+- Try deleting preferences: `defaults delete com.jameszaccardo.SysStats`
 - Rebuild and reinstall the app
 
 ### Stats show 0% or incorrect values

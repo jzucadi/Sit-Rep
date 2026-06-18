@@ -11,7 +11,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupStatusItem()
         setupPopover()
-        installHelperIfNeeded()
         observeStatsManager()
         observePreferences()
         PreferencesManager.shared.checkLaunchAtLoginStatus()
@@ -20,18 +19,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         StatsManager.shared.stopMonitoring()
-    }
-
-    // MARK: - Helper Installation
-
-    private func installHelperIfNeeded() {
-        if HelperManager.shared.needsInstallation {
-            HelperManager.shared.installHelper { success in
-                if success {
-                    SystemStats.shared.updateTemperatureAsync()
-                }
-            }
-        }
     }
 
     // MARK: - Status Item Setup

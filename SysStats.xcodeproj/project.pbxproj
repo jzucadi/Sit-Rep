@@ -11,15 +11,11 @@
 		A1000003229AAAAA00000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004229AAAAA00000001 /* AppDelegate.swift */; };
 		A1000005229AAAAA00000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006229AAAAA00000001 /* ContentView.swift */; };
 		A1000017229AAAAA00000001 /* SystemStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000018229AAAAA00000001 /* SystemStats.swift */; };
-		A100001A229AAAAA00000001 /* HelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001B229AAAAA00000001 /* HelperProtocol.swift */; };
-		A100001C229AAAAA00000001 /* HelperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D229AAAAA00000001 /* HelperManager.swift */; };
 		A100002E229AAAAA00000001 /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100002F229AAAAA00000001 /* StatsManager.swift */; };
 		A1000031229AAAAA00000001 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000030229AAAAA00000001 /* PreferencesManager.swift */; };
 		A1000035229AAAAA00000001 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000036229AAAAA00000001 /* Protocols.swift */; };
 		A1000048229AAAAA00000001 /* StatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000049229AAAAA00000001 /* StatType.swift */; };
 		A100004C229AAAAA00000001 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100004D229AAAAA00000001 /* Constants.swift */; };
-		A1000020229AAAAA00000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000021229AAAAA00000001 /* main.swift */; };
-		A1000025229AAAAA00000001 /* com.example.SysStatsHelper in CopyFiles */ = {isa = PBXBuildFile; fileRef = A100001F229AAAAA00000001 /* com.example.SysStatsHelper */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A1000033229AAAAA00000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000034229AAAAA00000001 /* Assets.xcassets */; };
 		A1000040229AAAAA00000001 /* SystemMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000041229AAAAA00000001 /* SystemMetricsTests.swift */; };
 		A1000042229AAAAA00000001 /* PreferencesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000043229AAAAA00000001 /* PreferencesManagerTests.swift */; };
@@ -28,13 +24,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A1000026229AAAAA00000001 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A1000011229AAAAA00000001 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A100001E229AAAAA00000001;
-			remoteInfo = SysStatsHelper;
-		};
 		A1000046229AAAAA00000001 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A1000011229AAAAA00000001 /* Project object */;
@@ -44,19 +33,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		A1000024229AAAAA00000001 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Contents/Library/LaunchServices;
-			dstSubfolderSpec = 1;
-			files = (
-				A1000025229AAAAA00000001 /* com.example.SysStatsHelper in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		A1000002229AAAAA00000001 /* SysStatsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SysStatsApp.swift; sourceTree = "<group>"; };
 		A1000004229AAAAA00000001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,18 +41,12 @@
 		A1000008229AAAAA00000001 /* SysStats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SysStats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000018229AAAAA00000001 /* SystemStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemStats.swift; sourceTree = "<group>"; };
 		A1000019229AAAAA00000001 /* SysStats.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SysStats.entitlements; sourceTree = "<group>"; };
-		A100001B229AAAAA00000001 /* HelperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperProtocol.swift; sourceTree = "<group>"; };
-		A100001D229AAAAA00000001 /* HelperManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperManager.swift; sourceTree = "<group>"; };
+		A1000050229AAAAA00000001 /* SysStats-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SysStats-Bridging-Header.h"; sourceTree = "<group>"; };
 		A100002F229AAAAA00000001 /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
 		A1000030229AAAAA00000001 /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		A1000036229AAAAA00000001 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		A1000049229AAAAA00000001 /* StatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatType.swift; sourceTree = "<group>"; };
 		A100004D229AAAAA00000001 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		A100001F229AAAAA00000001 /* com.example.SysStatsHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.example.SysStatsHelper; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1000021229AAAAA00000001 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		A1000022229AAAAA00000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A1000023229AAAAA00000001 /* launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = launchd.plist; sourceTree = "<group>"; };
-		A1000032229AAAAA00000001 /* SysStatsHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SysStatsHelper.entitlements; sourceTree = "<group>"; };
 		A1000034229AAAAA00000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1000037229AAAAA00000001 /* SysStatsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SysStatsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000041229AAAAA00000001 /* SystemMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMetricsTests.swift; sourceTree = "<group>"; };
@@ -87,13 +57,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		A1000009229AAAAA00000001 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A1000028229AAAAA00000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -114,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				A100000B229AAAAA00000001 /* SysStats */,
-				A1000029229AAAAA00000001 /* SysStatsHelper */,
 				A1000039229AAAAA00000001 /* SysStatsTests */,
 				A100000C229AAAAA00000001 /* Products */,
 			);
@@ -132,8 +94,7 @@
 				A1000036229AAAAA00000001 /* Protocols.swift */,
 				A1000049229AAAAA00000001 /* StatType.swift */,
 				A100004D229AAAAA00000001 /* Constants.swift */,
-				A100001B229AAAAA00000001 /* HelperProtocol.swift */,
-				A100001D229AAAAA00000001 /* HelperManager.swift */,
+				A1000050229AAAAA00000001 /* SysStats-Bridging-Header.h */,
 				A1000034229AAAAA00000001 /* Assets.xcassets */,
 				A1000007229AAAAA00000001 /* Info.plist */,
 				A1000019229AAAAA00000001 /* SysStats.entitlements */,
@@ -145,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				A1000008229AAAAA00000001 /* SysStats.app */,
-				A100001F229AAAAA00000001 /* com.example.SysStatsHelper */,
 				A1000037229AAAAA00000001 /* SysStatsTests.xctest */,
 			);
 			name = Products;
@@ -162,17 +122,6 @@
 			path = SysStatsTests;
 			sourceTree = "<group>";
 		};
-		A1000029229AAAAA00000001 /* SysStatsHelper */ = {
-			isa = PBXGroup;
-			children = (
-				A1000021229AAAAA00000001 /* main.swift */,
-				A1000022229AAAAA00000001 /* Info.plist */,
-				A1000023229AAAAA00000001 /* launchd.plist */,
-				A1000032229AAAAA00000001 /* SysStatsHelper.entitlements */,
-			);
-			path = SysStatsHelper;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -183,33 +132,15 @@
 				A100000F229AAAAA00000001 /* Sources */,
 				A1000009229AAAAA00000001 /* Frameworks */,
 				A1000010229AAAAA00000001 /* Resources */,
-				A1000024229AAAAA00000001 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A1000027229AAAAA00000001 /* PBXTargetDependency */,
 			);
 			name = SysStats;
 			productName = SysStats;
 			productReference = A1000008229AAAAA00000001 /* SysStats.app */;
 			productType = "com.apple.product-type.application";
-		};
-		A100001E229AAAAA00000001 /* SysStatsHelper */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A100002A229AAAAA00000001 /* Build configuration list for PBXNativeTarget "SysStatsHelper" */;
-			buildPhases = (
-				A100002B229AAAAA00000001 /* Sources */,
-				A1000028229AAAAA00000001 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SysStatsHelper;
-			productName = SysStatsHelper;
-			productReference = A100001F229AAAAA00000001 /* com.example.SysStatsHelper */;
-			productType = "com.apple.product-type.tool";
 		};
 		A100003A229AAAAA00000001 /* SysStatsTests */ = {
 			isa = PBXNativeTarget;
@@ -242,9 +173,6 @@
 					A100000D229AAAAA00000001 = {
 						CreatedOnToolsVersion = 15.0;
 					};
-					A100001E229AAAAA00000001 = {
-						CreatedOnToolsVersion = 15.0;
-					};
 					A100003A229AAAAA00000001 = {
 						CreatedOnToolsVersion = 15.0;
 						TestTargetID = A100000D229AAAAA00000001;
@@ -265,7 +193,6 @@
 			projectRoot = "";
 			targets = (
 				A100000D229AAAAA00000001 /* SysStats */,
-				A100001E229AAAAA00000001 /* SysStatsHelper */,
 				A100003A229AAAAA00000001 /* SysStatsTests */,
 			);
 		};
@@ -303,16 +230,6 @@
 				A1000035229AAAAA00000001 /* Protocols.swift in Sources */,
 				A1000048229AAAAA00000001 /* StatType.swift in Sources */,
 				A100004C229AAAAA00000001 /* Constants.swift in Sources */,
-				A100001A229AAAAA00000001 /* HelperProtocol.swift in Sources */,
-				A100001C229AAAAA00000001 /* HelperManager.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A100002B229AAAAA00000001 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A1000020229AAAAA00000001 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,11 +247,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A1000027229AAAAA00000001 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A100001E229AAAAA00000001 /* SysStatsHelper */;
-			targetProxy = A1000026229AAAAA00000001 /* PBXContainerItemProxy */;
-		};
 		A1000047229AAAAA00000001 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A100000D229AAAAA00000001 /* SysStats */;
@@ -478,9 +390,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.SysStats;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jameszaccardo.SysStats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SysStats/SysStats-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -506,41 +419,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.SysStats;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jameszaccardo.SysStats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		A100002C229AAAAA00000001 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = SysStatsHelper/SysStatsHelper.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = SysStatsHelper/Info.plist;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.SysStatsHelper;
-				PRODUCT_NAME = com.example.SysStatsHelper;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		A100002D229AAAAA00000001 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = SysStatsHelper/SysStatsHelper.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = SysStatsHelper/Info.plist;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.SysStatsHelper;
-				PRODUCT_NAME = com.example.SysStatsHelper;
-				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SysStats/SysStats-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -553,7 +435,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.SysStatsTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jameszaccardo.SysStatsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -569,7 +451,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.SysStatsTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jameszaccardo.SysStatsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -594,15 +476,6 @@
 			buildConfigurations = (
 				A1000013229AAAAA00000001 /* Debug */,
 				A1000014229AAAAA00000001 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A100002A229AAAAA00000001 /* Build configuration list for PBXNativeTarget "SysStatsHelper" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A100002C229AAAAA00000001 /* Debug */,
-				A100002D229AAAAA00000001 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

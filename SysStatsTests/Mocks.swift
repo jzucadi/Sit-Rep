@@ -57,24 +57,3 @@ class MockPreferences: PreferencesProtocol {
         self.temperatureUnit = temperatureUnit
     }
 }
-
-// MARK: - Mock Helper Manager
-
-class MockHelperManager: HelperManagerProtocol {
-    var needsInstallation: Bool = false
-    var installHelperResult: Bool = true
-    var temperatureResult: Double = 55.0
-
-    var installHelperCalled = false
-    var getTemperatureCalled = false
-
-    func installHelper(completion: @escaping (Bool) -> Void) {
-        installHelperCalled = true
-        completion(installHelperResult)
-    }
-
-    func getTemperature(completion: @escaping (Double) -> Void) {
-        getTemperatureCalled = true
-        completion(temperatureResult)
-    }
-}

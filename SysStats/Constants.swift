@@ -5,7 +5,7 @@ import os.log
 
 enum AppConstants {
     static let appName = "SysStats"
-    static let bundleIdentifier = "com.example.SysStats"
+    static let bundleIdentifier = "com.jameszaccardo.SysStats"
 }
 
 // MARK: - UI Constants
@@ -74,7 +74,6 @@ enum Log {
 
     static let general = Logger(subsystem: subsystem, category: "general")
     static let stats = Logger(subsystem: subsystem, category: "stats")
-    static let helper = Logger(subsystem: subsystem, category: "helper")
     static let temperature = Logger(subsystem: subsystem, category: "temperature")
     static let ui = Logger(subsystem: subsystem, category: "ui")
 }

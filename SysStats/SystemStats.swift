@@ -51,6 +51,7 @@ class SystemStats {
 
     private var previousCPUInfo: host_cpu_load_info?
     private var smcConnection: io_connect_t = 0
+    private let hidReader = HIDTemperatureReader()
 
     private init() {
         openSMCConnection()
@@ -215,33 +216,20 @@ class SystemStats {
     }
 
     func updateTemperatureAsync() {
-        // Try privileged helper first (works on Apple Silicon)
-        HelperManager.shared.getTemperature { [weak self] temp in
-            if temp > 10 && temp < 120 {
-                DispatchQueue.main.async {
-                    self?.cachedTemperature = temp
-                    self?.lastTemperatureUpdate = Date()
-                }
-                return
+        // Read on-die thermal sensors in-process — no helper, root, or entitlement.
+        // HID sensors cover Apple Silicon; SMC keys are the Intel fallback.
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            guard let self else { return }
+
+            var temp = self.hidReader.readCPUTemperature()
+            if !TemperatureConstants.isValid(temp) {
+                temp = self.getSMCTemperature() ?? 0
             }
 
-            // Fallback to direct SMC access (may work on Intel)
-            DispatchQueue.global(qos: .utility).async {
-                if let smcTemp = self?.getSMCTemperature(), smcTemp > 10 && smcTemp < 120 {
-                    DispatchQueue.main.async {
-                        self?.cachedTemperature = smcTemp
-                        self?.lastTemperatureUpdate = Date()
-                    }
-                    return
-                }
-
-                // Try IOKit thermal sensors
-                if let ioTemp = self?.getIOKitThermalTemperature(), ioTemp > 10 && ioTemp < 120 {
-                    DispatchQueue.main.async {
-                        self?.cachedTemperature = ioTemp
-                        self?.lastTemperatureUpdate = Date()
-                    }
-                }
+            guard TemperatureConstants.isValid(temp) else { return }
+            DispatchQueue.main.async {
+                self.cachedTemperature = temp
+                self.lastTemperatureUpdate = Date()
             }
         }
     }
@@ -284,79 +272,6 @@ class SystemStats {
         for key in intelKeys {
             if let temp = readSMCKey(key), temp > 10 && temp < 120 {
                 return temp
-            }
-        }
-
-        return nil
-    }
-
-    private func getIOKitThermalTemperature() -> Double? {
-        // Try AppleARMIODevice for Apple Silicon thermal sensors
-        let serviceNames = ["AppleARMIODevice", "IOHIDEventService", "AppleSMCKeySensor"]
-
-        for serviceName in serviceNames {
-            let matchingDict = IOServiceMatching(serviceName)
-            var iterator: io_iterator_t = 0
-
-            guard IOServiceGetMatchingServices(kIOMainPortDefault, matchingDict, &iterator) == KERN_SUCCESS else {
-                continue
-            }
-
-            defer { IOObjectRelease(iterator) }
-
-            var service = IOIteratorNext(iterator)
-            while service != 0 {
-                defer {
-                    IOObjectRelease(service)
-                    service = IOIteratorNext(iterator)
-                }
-
-                var properties: Unmanaged<CFMutableDictionary>?
-                guard IORegistryEntryCreateCFProperties(service, &properties, kCFAllocatorDefault, 0) == KERN_SUCCESS,
-                      let props = properties?.takeRetainedValue() as? [String: Any] else {
-                    continue
-                }
-
-                // Look for temperature-related properties
-                if let temp = props["Temperature"] as? Double, temp > 10 && temp < 120 {
-                    return temp
-                }
-                if let temp = props["temperature"] as? Double, temp > 10 && temp < 120 {
-                    return temp
-                }
-                if let temp = props["CurrentTemperature"] as? Double, temp > 10 && temp < 120 {
-                    return temp
-                }
-                // Some sensors report in millidegrees
-                if let temp = props["Temperature"] as? Int {
-                    let celsius = Double(temp) / 1000.0
-                    if celsius > 10 && celsius < 120 {
-                        return celsius
-                    }
-                }
-            }
-        }
-
-        // Last resort: try to get from thermal zone via sysctl
-        if let temp = getThermalZoneTemperature() {
-            return temp
-        }
-
-        return nil
-    }
-
-    private func getThermalZoneTemperature() -> Double? {
-        // Try reading SOC temperature via sysctl (Apple Silicon)
-        var temp: Int32 = 0
-        var size = MemoryLayout<Int32>.size
-
-        // Try machdep.xcpm.cpu_thermal_level (gives 0-100 thermal level, not actual temp)
-        // This is a rough approximation
-        if sysctlbyname("machdep.xcpm.cpu_thermal_level", &temp, &size, nil, 0) == 0 {
-            // Convert thermal level (0-100) to approximate temperature (35-100°C range)
-            let approxTemp = 35.0 + (Double(temp) * 0.65)
-            if approxTemp > 10 && approxTemp < 120 {
-                return approxTemp
             }
         }
 
@@ -533,5 +448,59 @@ class SystemStats {
         }
 
         return nil
+    }
+}
+
+// MARK: - Apple Silicon Thermal Sensors (IOHIDEventSystem)
+
+/// Reads on-die temperature sensors via the IOHIDEventSystem API.
+/// Runs fully unprivileged — no helper, root, or entitlement required.
+final class HIDTemperatureReader {
+    private let page = 0xff00            // kHIDPage_AppleVendor
+    private let usage = 0x0005           // kHIDUsage_AppleVendor_TemperatureSensor
+    private let eventTypeTemperature: Int64 = 15  // kIOHIDEventTypeTemperature
+    private let temperatureField = Int32(15 << 16) // IOHIDEventFieldBase(temperature)
+
+    /// CPU/SOC temperature in Celsius, or 0 if no sensor is available.
+    func readCPUTemperature() -> Double {
+        let sensors = readSensors()
+        guard !sensors.isEmpty else { return 0 }
+
+        // Prefer CPU/SoC die sensors; otherwise average everything we found.
+        // Sensor names vary by Mac: "pACC/eACC MTR" on some, "PMU tdieN" on others.
+        let cpu = sensors.filter { name, _ in
+            let n = name.lowercased()
+            return n.contains("die") || n.contains("cpu") || n.contains("soc")
+                || n.hasPrefix("pacc") || n.hasPrefix("eacc")
+        }.map { $0.value }
+
+        let pool = cpu.isEmpty ? Array(sensors.values) : cpu
+        return pool.reduce(0, +) / Double(pool.count)
+    }
+
+    private func readSensors() -> [String: Double] {
+        guard let system = IOHIDEventSystemClientCreate(kCFAllocatorDefault)?.takeRetainedValue() else {
+            return [:]
+        }
+
+        let matching = ["PrimaryUsagePage": page, "PrimaryUsage": usage] as CFDictionary
+        IOHIDEventSystemClientSetMatching(system, matching)
+
+        guard let services = IOHIDEventSystemClientCopyServices(system) as? [IOHIDServiceClient] else {
+            return [:]
+        }
+
+        var sensors: [String: Double] = [:]
+        for service in services {
+            guard let event = IOHIDServiceClientCopyEvent(service, eventTypeTemperature, 0, 0)?.takeRetainedValue() else {
+                continue
+            }
+            let value = IOHIDEventGetFloatValue(event, temperatureField)
+            guard TemperatureConstants.isValid(value) else { continue }
+
+            let name = (IOHIDServiceClientCopyProperty(service, "Product" as CFString) as? String) ?? ""
+            sensors[name.isEmpty ? "sensor\(sensors.count)" : name] = value
+        }
+        return sensors
     }
 }

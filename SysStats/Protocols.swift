@@ -22,16 +22,7 @@ protocol PreferencesProtocol: AnyObject {
     var launchAtLogin: Bool { get set }
 }
 
-// MARK: - Helper Manager Protocol
-
-protocol HelperManagerProtocol {
-    var needsInstallation: Bool { get }
-    func installHelper(completion: @escaping (Bool) -> Void)
-    func getTemperature(completion: @escaping (Double) -> Void)
-}
-
 // MARK: - Protocol Conformance Extensions
 
 extension SystemStats: SystemStatsProtocol {}
 extension PreferencesManager: PreferencesProtocol {}
-extension HelperManager: HelperManagerProtocol {}
