@@ -32,7 +32,7 @@ The only system stat app you will ever need.
 - **SwiftUI popover** - Click for detailed stats with color-coded progress bars
 - **Preferences panel** - Customize which stats to show, temperature unit, and more
 - **Launch at login** - Optional auto-start when you log in
-- **Apple Silicon support** - Optimized for M1/M2/M3 Macs with IOKit thermal sensors
+- **Apple Silicon support** - Reads M1/M2/M3 on-die thermal sensors in-process, with no privileged helper or admin password
 - **Low resource usage** - Minimal CPU and memory footprint
 
 ## Screenshots
@@ -92,7 +92,7 @@ See [Building from Source](#building-from-source) section below.
 
 - macOS 13.0 or later
 - Xcode 15.0 or later
-- A valid Apple Developer account (for code signing)
+- **No paid Apple Developer account needed to build and run locally** — a free Apple ID (or ad-hoc signing) is enough. A paid Developer Program membership is only required to notarize the app for distribution to other machines.
 
 ### Steps
 
@@ -117,6 +117,25 @@ See [Building from Source](#building-from-source) section below.
    - Press `⌘R` or select Product → Run
    - The app will launch in your menu bar
 
+### Building from the Command Line
+
+If you prefer the terminal (and have the full Xcode installed, not just the Command Line Tools):
+
+```bash
+# Build a runnable, ad-hoc-signed debug app — no Apple account required
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
+  xcodebuild -project SysStats.xcodeproj -scheme SysStats \
+  -configuration Debug -derivedDataPath build \
+  CODE_SIGN_IDENTITY="-" build
+
+# Launch it
+open build/Build/Products/Debug/SysStats.app
+```
+
+> `DEVELOPER_DIR=…` points `xcodebuild` at Xcode for that command only, in case
+> `xcode-select` is set to the Command Line Tools. To make it permanent:
+> `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
+
 ### Building for Release
 
 For a release build with optimizations:
@@ -140,7 +159,7 @@ The built app will be in `build/Build/Products/Release/` and the DMG in `dist/`.
 
 ### Menu Bar
 
-The stats appear in your menu bar in the format: `C:45% G:12% R:67% 42°`
+The stats appear in your menu bar as SF Symbol icons with values, e.g. 🖥️ 14%  ❄️ 35%  💾 75%  🌡️ 39°
 
 Click the menu bar item to:
 - View detailed stats with visual progress bars
@@ -255,14 +274,12 @@ The app is configured with Hardened Runtime for enhanced security. The only enti
 - Try deleting preferences: `defaults delete com.jameszaccardo.SysStats`
 - Rebuild and reinstall the app
 
-### Stats show 0% or incorrect values
+### Stats show 0%
 
-**Cause:** Permissions issue or IOKit access problem.
+No permissions are required, so all-zero stats usually mean one of:
 
-**Solution:**
-- Grant all requested permissions in System Settings → Privacy & Security
-- Restart the app after granting permissions
-- Check Console.app for error messages related to IOKit
+- **A stale or duplicate instance is showing** — most often an Xcode test-host launch. RAM, GPU, and temperature should be non-zero immediately, so if *everything* sits at 0%, you're probably looking at a non-running/duplicate instance. Quit extras in Activity Monitor and keep a single instance.
+- **CPU only shows 0% briefly at launch** — CPU usage is computed from the difference between two samples, so it reads 0% until the second update interval elapses. This is expected.
 
 ### App won't launch after installation
 
