@@ -1,6 +1,6 @@
 # MyStats
 
-[![CI](https://github.com/jzucadi/MyStats/actions/workflows/objective-c-xcode.yml/badge.svg)](https://github.com/jzucadi/MyStats/actions/workflows/objective-c-xcode.yml)
+[![CI](https://github.com/jzucadi/MyStats/actions/workflows/ci.yml/badge.svg)](https://github.com/jzucadi/MyStats/actions/workflows/ci.yml)
 [![macOS](https://img.shields.io/badge/macOS-13.0+-blue.svg)](https://www.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org/)
 
