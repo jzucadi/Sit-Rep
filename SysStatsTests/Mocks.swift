@@ -1,5 +1,4 @@
 import Foundation
-@testable import SysStats
 
 // MARK: - Mock System Stats
 

@@ -1,5 +1,4 @@
 import XCTest
-@testable import SysStats
 
 final class SystemMetricsTests: XCTestCase {
 

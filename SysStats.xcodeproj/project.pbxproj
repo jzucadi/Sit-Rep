@@ -21,6 +21,12 @@
 		A1000042229AAAAA00000001 /* PreferencesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000043229AAAAA00000001 /* PreferencesManagerTests.swift */; };
 		A1000044229AAAAA00000001 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000045229AAAAA00000001 /* Mocks.swift */; };
 		A100004A229AAAAA00000001 /* StatTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100004B229AAAAA00000001 /* StatTypeTests.swift */; };
+		A1000061229AAAAA00000001 /* SystemStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000018229AAAAA00000001 /* SystemStats.swift */; };
+		A1000062229AAAAA00000001 /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100002F229AAAAA00000001 /* StatsManager.swift */; };
+		A1000063229AAAAA00000001 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000030229AAAAA00000001 /* PreferencesManager.swift */; };
+		A1000064229AAAAA00000001 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000036229AAAAA00000001 /* Protocols.swift */; };
+		A1000065229AAAAA00000001 /* StatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000049229AAAAA00000001 /* StatType.swift */; };
+		A1000066229AAAAA00000001 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100004D229AAAAA00000001 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -241,6 +247,12 @@
 				A1000042229AAAAA00000001 /* PreferencesManagerTests.swift in Sources */,
 				A100004A229AAAAA00000001 /* StatTypeTests.swift in Sources */,
 				A1000044229AAAAA00000001 /* Mocks.swift in Sources */,
+				A1000061229AAAAA00000001 /* SystemStats.swift in Sources */,
+				A1000062229AAAAA00000001 /* StatsManager.swift in Sources */,
+				A1000063229AAAAA00000001 /* PreferencesManager.swift in Sources */,
+				A1000064229AAAAA00000001 /* Protocols.swift in Sources */,
+				A1000065229AAAAA00000001 /* StatType.swift in Sources */,
+				A1000066229AAAAA00000001 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,7 +442,6 @@
 		A100003E229AAAAA00000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -438,15 +449,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jameszaccardo.SysStatsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "SysStats/SysStats-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SysStats.app/Contents/MacOS/SysStats";
 			};
 			name = Debug;
 		};
 		A100003F229AAAAA00000001 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -454,8 +464,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jameszaccardo.SysStatsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "SysStats/SysStats-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SysStats.app/Contents/MacOS/SysStats";
 			};
 			name = Release;
 		};
