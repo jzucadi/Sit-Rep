@@ -20,13 +20,6 @@ final class StatTypeTests: XCTestCase {
         XCTAssertEqual(StatType.temperature.label, "Temp")
     }
 
-    func testStatTypePreferencesLabels() {
-        XCTAssertEqual(StatType.cpu.preferencesLabel, "CPU Usage")
-        XCTAssertEqual(StatType.gpu.preferencesLabel, "GPU Usage")
-        XCTAssertEqual(StatType.ram.preferencesLabel, "RAM Usage")
-        XCTAssertEqual(StatType.temperature.preferencesLabel, "Temperature")
-    }
-
     // MARK: - StatType All Cases
 
     func testStatTypeAllCases() {
@@ -178,12 +171,4 @@ final class TemperatureUtilitiesTests: XCTestCase {
         XCTAssertEqual(TemperatureUtilities.format(-5.0, unit: .celsius), "—")
     }
 
-    func testFormatShortCelsius() {
-        XCTAssertEqual(TemperatureUtilities.formatShort(55.0, unit: .celsius), "55°")
-        XCTAssertEqual(TemperatureUtilities.formatShort(0.0, unit: .celsius), "—°")
-    }
-
-    func testFormatShortFahrenheit() {
-        XCTAssertEqual(TemperatureUtilities.formatShort(100.0, unit: .fahrenheit), "212°")
-    }
 }

@@ -1,36 +1,5 @@
 import Foundation
 
-// MARK: - Mock System Stats
-
-class MockSystemStats: SystemStatsProtocol {
-    var cpuUsage: Double = 45.0
-    var ramUsage: Double = 60.0
-    var gpuUsage: Double = 30.0
-    var temperature: Double = 55.0
-
-    var updateTemperatureAsyncCalled = false
-
-    func getCPUUsage() -> Double {
-        return cpuUsage
-    }
-
-    func getRAMUsage() -> Double {
-        return ramUsage
-    }
-
-    func getGPUUsage() -> Double {
-        return gpuUsage
-    }
-
-    func getCPUTemperature() -> Double {
-        return temperature
-    }
-
-    func updateTemperatureAsync() {
-        updateTemperatureAsyncCalled = true
-    }
-}
-
 // MARK: - Mock Preferences
 
 class MockPreferences: PreferencesProtocol {

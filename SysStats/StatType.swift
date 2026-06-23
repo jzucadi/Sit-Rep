@@ -28,15 +28,6 @@ enum StatType: String, CaseIterable, Identifiable {
         }
     }
 
-    var preferencesLabel: String {
-        switch self {
-        case .cpu: return "CPU Usage"
-        case .gpu: return "GPU Usage"
-        case .ram: return "RAM Usage"
-        case .temperature: return "Temperature"
-        }
-    }
-
     var accessibilityLabel: String {
         switch self {
         case .cpu: return "CPU Usage"
@@ -122,16 +113,6 @@ struct ColorUtilities {
         return .red
     }
 
-    /// Returns the appropriate color for a stat type
-    static func color(for statType: StatType, metrics: SystemMetrics) -> Color {
-        switch statType {
-        case .cpu, .gpu, .ram:
-            return usageColor(for: statType.percentage(from: metrics))
-        case .temperature:
-            return temperatureColor(for: metrics.temperature)
-        }
-    }
-
     /// Returns the icon color for a stat type
     static func iconColor(for statType: StatType) -> Color {
         switch statType {
@@ -156,12 +137,5 @@ struct TemperatureUtilities {
         guard celsius > 0 else { return "—" }
         let displayTemp = unit == .fahrenheit ? celsiusToFahrenheit(celsius) : celsius
         return String(format: "%.0f%@", displayTemp, unit.label)
-    }
-
-    /// Format temperature for status bar (shorter format)
-    static func formatShort(_ celsius: Double, unit: TemperatureUnit) -> String {
-        guard celsius > 0 else { return "—°" }
-        let displayTemp = unit == .fahrenheit ? celsiusToFahrenheit(celsius) : celsius
-        return String(format: "%d°", Int(displayTemp))
     }
 }

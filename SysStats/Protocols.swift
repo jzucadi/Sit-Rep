@@ -1,15 +1,5 @@
 import Foundation
 
-// MARK: - System Stats Protocol
-
-protocol SystemStatsProtocol {
-    func getCPUUsage() -> Double
-    func getRAMUsage() -> Double
-    func getGPUUsage() -> Double
-    func getCPUTemperature() -> Double
-    func updateTemperatureAsync()
-}
-
 // MARK: - Preferences Protocol
 
 protocol PreferencesProtocol: AnyObject {
@@ -24,5 +14,4 @@ protocol PreferencesProtocol: AnyObject {
 
 // MARK: - Protocol Conformance Extensions
 
-extension SystemStats: SystemStatsProtocol {}
 extension PreferencesManager: PreferencesProtocol {}
