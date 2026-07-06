@@ -1,4 +1,4 @@
-# MyStats
+# Sit Rep
 
 [![CI](https://github.com/jzucadi/MyStats/actions/workflows/ci.yml/badge.svg)](https://github.com/jzucadi/MyStats/actions/workflows/ci.yml)
 [![macOS](https://img.shields.io/badge/macOS-13.0+-blue.svg)](https://www.apple.com/macos/)
